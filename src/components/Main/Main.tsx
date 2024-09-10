@@ -1,4 +1,14 @@
-import { List, MainContainer, MainText, PageButton } from "./MainStyle";
+import {
+  ButtonNext,
+  ButtonPrev,
+  List,
+  ListItem,
+  ListUser,
+  ListUserItem,
+  MainContainer,
+  MainText,
+  PageButton,
+} from "./MainStyle";
 import Search from "../Search/Search";
 import { useInputUser } from "../../context/hooks/inputUser";
 import { useEffect, useState } from "react";
@@ -6,12 +16,12 @@ import { getUser } from "../../api/getUser";
 import Sorting from "../Sorting/Sorting";
 import Loader from "../Loader/Loader";
 
-export interface User {
+export type User = {
   login: string;
   id: number;
   repos_url: string;
-  publicRepos?: number;
-}
+  html_url: string;
+};
 
 const Main = () => {
   const { inputUser } = useInputUser();
@@ -21,6 +31,7 @@ const Main = () => {
   const [sortingUsers, setSortingUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     if (inputUser) {
@@ -63,6 +74,9 @@ const Main = () => {
     setSortingUsers(sortedUsers);
   };
 
+  const handleOpenItem = (user: User) => {
+    setCurrentUser(user === currentUser ? null : user);
+  };
   return (
     <MainContainer>
       <Search />
@@ -81,15 +95,28 @@ const Main = () => {
         <>
           <List>
             {inputResult.map((item) => (
-              <span key={item.id}>{item.login}</span>
+              <ListItem key={item.id} onClick={() => handleOpenItem(item)}>
+                {item.login}
+                {currentUser?.id === item.id && (
+                  <ListUser>
+                    <ListUserItem>Логин: {currentUser.login}</ListUserItem>
+                    <ListUserItem>
+                      Ссылка на профиль: {currentUser.html_url}
+                    </ListUserItem>
+                    <ListUserItem>
+                      Кол-во репозиториев: {currentUser.repos_url.length}
+                    </ListUserItem>
+                  </ListUser>
+                )}
+              </ListItem>
             ))}
           </List>
           <PageButton>
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            <ButtonPrev onClick={handlePrevPage} disabled={currentPage === 1}>
               Предыдущая
-            </button>
+            </ButtonPrev>
             <p>{currentPage}</p>
-            <button onClick={handleNextPage}>Следующая</button>
+            <ButtonNext onClick={handleNextPage}>Следующая</ButtonNext>
           </PageButton>
         </>
       )}

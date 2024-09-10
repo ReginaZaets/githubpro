@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ButtonSorting,
+  ListItem,
   ListSorting,
   ListSortingItem,
-  ListSortingUl,
+  ListSortingP,
 } from "./SortingStyle";
 import { User } from "../Main/Main";
 
@@ -23,8 +24,8 @@ const Sorting = ({ sortingUsers, onSortingChange }: SortingProps) => {
 
   const handleSortingList = (order: "По возрастанию" | "По убыванию") => {
     const sorted = [...sortingUsers].sort((a, b) => {
-      const reposA = a.publicRepos ?? 0;
-      const reposB = b.publicRepos ?? 0;
+      const reposA = a.repos_url.length;
+      const reposB = b.repos_url.length;
 
       if (order === "По возрастанию") {
         return reposA - reposB;
@@ -33,6 +34,7 @@ const Sorting = ({ sortingUsers, onSortingChange }: SortingProps) => {
       }
     });
     onSortingChange(sorted);
+    setIsOpenList(false);
   };
   useEffect(() => {
     const handleCloseList = (event: MouseEvent) => {
@@ -52,20 +54,20 @@ const Sorting = ({ sortingUsers, onSortingChange }: SortingProps) => {
       <ButtonSorting onClick={handleOpenList}>Репозиториям</ButtonSorting>
       {isOpenList && (
         <ListSortingItem>
-          <ListSortingUl ref={listRef}>
+          <ListSortingP ref={listRef}>
             {list.map((item, index) => {
               return (
-                <span
+                <ListItem
                   key={index}
                   onClick={() =>
                     handleSortingList(item as "По возрастанию" | "По убыванию")
                   }
                 >
                   {item}
-                </span>
+                </ListItem>
               );
             })}
-          </ListSortingUl>
+          </ListSortingP>
         </ListSortingItem>
       )}
     </ListSorting>

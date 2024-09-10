@@ -13,6 +13,11 @@ export const ButtonSorting = styled.button`
   color: #1b1b1b;
   margin-right: 10px;
   z-index: 0;
+  cursor: pointer;
+  &:focus {
+    background-color: #1b1b1b;
+    color: #ffffff;
+  }
 `;
 
 export const ListSorting = styled.div`
@@ -26,16 +31,23 @@ export const ListSortingItem = styled.div`
   min-width: 80px;
   position: absolute;
   margin-top: 250px;
-  margin-left: 120px;
-  border: 12px;
+  margin-left: 130px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 34px;
-  height: 100px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  white-space: nowrap;
 `;
 
-export const ListSortingUl = styled.p`
+export const ListSortingP = styled.p`
   display: flex;
   flex-direction: column;
   gap: 25px;
+`;
+
+export const ListItem = styled.span`
+  cursor: pointer;
 `;
