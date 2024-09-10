@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useInputUser } from "../../context/hooks/inputUser";
 import { SearchInput, SearchMain } from "./SearchStyle";
 
@@ -12,9 +12,7 @@ const Search = () => {
       return false;
     }
     if (/[^a-zA-Z0-9]/.test(value)) {
-      setError(
-        "Ввод может содержать только латинские буквы, цифры и дефисы."
-      );
+      setError("Ввод может содержать только латинские буквы, цифры и дефисы.");
       return false;
     }
     setError(null);
@@ -36,6 +34,7 @@ const Search = () => {
         name="search"
         value={inputUser}
         onChange={handleSearch}
+        data-testid="search"
       />
       {error && <p style={{ color: "red" }}>{error}</p>}
     </SearchMain>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ButtonSorting,
   ListItem,
@@ -51,9 +51,11 @@ const Sorting = ({ sortingUsers, onSortingChange }: SortingProps) => {
   return (
     <ListSorting>
       <h3>Сортировать по:</h3>
-      <ButtonSorting onClick={handleOpenList}>Репозиториям</ButtonSorting>
+      <ButtonSorting data-testid="sorting" onClick={handleOpenList}>
+        Репозиториям
+      </ButtonSorting>
       {isOpenList && (
-        <ListSortingItem>
+        <ListSortingItem role="list">
           <ListSortingP ref={listRef}>
             {list.map((item, index) => {
               return (

@@ -11,7 +11,7 @@ import {
 } from "./MainStyle";
 import Search from "../Search/Search";
 import { useInputUser } from "../../context/hooks/inputUser";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUser } from "../../api/getUser";
 import Sorting from "../Sorting/Sorting";
 import Loader from "../Loader/Loader";
@@ -91,11 +91,11 @@ const Main = () => {
       </MainText>
       {isLoading && <Loader />}
       {!isLoading && isError && <p>{isError}</p>}
-      {!isLoading && inputResult.length > 0 && (
+      {!isLoading && inputResult?.length > 0 && (
         <>
           <List>
             {inputResult.map((item) => (
-              <ListItem key={item.id} onClick={() => handleOpenItem(item)}>
+              <ListItem data-testid="users" key={item.id} onClick={() => handleOpenItem(item)}>
                 {item.login}
                 {currentUser?.id === item.id && (
                   <ListUser>
@@ -104,7 +104,7 @@ const Main = () => {
                       Ссылка на профиль: {currentUser.html_url}
                     </ListUserItem>
                     <ListUserItem>
-                      Кол-во репозиториев: {currentUser.repos_url.length}
+                      Кол-во репозиториев: {currentUser.repos_url?.length}
                     </ListUserItem>
                   </ListUser>
                 )}
