@@ -1,53 +1,40 @@
-# React + TypeScript + Vite
+# Поиск пользователей GitHub.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Запуск проекта npm run dev
 
-Currently, two official plugins are available:
+### Тестирование npm run test
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Сборка проекта npm run build
 
-## Expanding the ESLint configuration
+## Функционал 
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Доступна главная страница для поиска пользователей в GitHub по логину. 
+1. На странице есть поле ввода, куда можно ввести логин любого пользователя. 
+- Если пользователи с таким логином существуют, то они все отобразятся на странице. 
+- Пока пользователи загружаются, на странице надпись "данные загружаются", как только загрузились - надпись пропадает.
+- Если пользователей с таким логиком не существует, то появится надпись "ничего не найдено".
+- У поля ввода есть валидация, пользователь не может ввести пробел или буквы кирилицу, ошибки отображаются ниже поля ввода.
+2. На странице есть сортировка по количеству репозиториев найденных пользователей.
+- Если нажать на кнопку "репозиториями", то выпадет окно с выбором сортировки "по возрастанию" и "по убыванию".
+- Если нажать вне окна, то оно закроется. 
+- При выборе на соотвествующую сортировку, все пользователи отсортируются на главной странице.
+3. Как только список пользователей появится на странице, на любой логин можно кликнуть.
+- После клика появится окно с данными конкретного пользователя: логин, ссылка на гит и количество его репозиториев.
+- Если нажать опять на логин, то окно пропадет.
+4. Если при поиске логинов нам приходит много данных, то они разбираются на страницы, присутствует пагинация.
+- По умолчанию на первой странице заблокирована кнопка "предыдущая".
+- Можно нажимать на кнопки "следущая" и "предыдущая" на второй и последующих страницах.
+- Рядом указана страница, на которой пользователь сейчас находится.
+- Если никакие данные не введены в поле ввода, то страницы ниакой нет.
+5. Добавлены тесты, которые проходят проверку.
+- Тест на корректную загрузку данных на главной странице - если вводим логин, то данные появляются на странице.
+- Тест на наличие поля ввода, и что введенные данные соответствуют написаному.
+- Тест на кнопку сортировки, при нажатии на кнопку "репозиториям", появляется окно со списком сортировки.
+6. Дополнительный функционал.
+- Есть страница 404 - не найдено. При переходе на несуществующую страницу, появляется кнопка для перехода на главную.
+- Добавлен контекст для использования поля ввода.
+- Токен спрятан в папке .env
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
 ## Настройка переменных окружения
 
 Для работы проекта необходимо создать файл `.env` в корне проекта и указать в нём требуемые переменные окружения. 
