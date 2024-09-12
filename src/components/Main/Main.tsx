@@ -1,10 +1,6 @@
 import {
   ButtonNext,
   ButtonPrev,
-  List,
-  ListItem,
-  ListUser,
-  ListUserItem,
   MainContainer,
   MainText,
   PageButton,
@@ -15,13 +11,8 @@ import React, { useEffect, useState } from "react";
 import { getUser } from "../../api/getUser";
 import Sorting from "../Sorting/Sorting";
 import Loader from "../Loader/Loader";
-
-export type User = {
-  login: string;
-  id: number;
-  repos_url: string;
-  html_url: string;
-};
+import ListItemUser from "./ListItem/ListItem";
+import { User } from "../../lib/types";
 
 const Main = () => {
   const { inputUser } = useInputUser();
@@ -93,24 +84,11 @@ const Main = () => {
       {!isLoading && isError && <p>{isError}</p>}
       {!isLoading && inputResult?.length > 0 && (
         <>
-          <List>
-            {inputResult.map((item) => (
-              <ListItem data-testid="users" key={item.id} onClick={() => handleOpenItem(item)}>
-                {item.login}
-                {currentUser?.id === item.id && (
-                  <ListUser>
-                    <ListUserItem>Логин: {currentUser.login}</ListUserItem>
-                    <ListUserItem>
-                      Ссылка на профиль: {currentUser.html_url}
-                    </ListUserItem>
-                    <ListUserItem>
-                      Кол-во репозиториев: {currentUser.repos_url?.length}
-                    </ListUserItem>
-                  </ListUser>
-                )}
-              </ListItem>
-            ))}
-          </List>
+          <ListItemUser
+            users={inputResult}
+            currentUser={currentUser}
+            onOpenItem={handleOpenItem}
+          />
           <PageButton>
             <ButtonPrev onClick={handlePrevPage} disabled={currentPage === 1}>
               Предыдущая
