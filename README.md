@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Поиск пользователей GitHub.
 
 ### Запуск проекта npm run dev
 
