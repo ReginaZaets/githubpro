@@ -6,12 +6,7 @@ import {
   ListSortingItem,
   ListSortingP,
 } from "./SortingStyle";
-import { User } from "../Main/Main";
-
-type SortingProps = {
-  sortingUsers: User[];
-  onSortingChange: (sortedUsers: User[]) => void;
-};
+import { SortingProps } from "../../lib/types";
 
 const Sorting = ({ sortingUsers, onSortingChange }: SortingProps) => {
   const [isOpenList, setIsOpenList] = useState(false);
